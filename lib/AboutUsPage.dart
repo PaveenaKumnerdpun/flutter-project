@@ -1,22 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/MainPage.dart';
-
-import 'MainPage.dart';
 
 class AboutUsPage extends StatelessWidget {
   const AboutUsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const aboutUsPage(),
-      theme:
-          ThemeData(brightness: Brightness.light, primarySwatch: Colors.blue),
-      routes: {
-        '/MainPage': (context) => const MainPage(),
-      },
-    );
+    return const aboutUsPage();
   }
 }
 
@@ -34,7 +23,7 @@ class _aboutUsPageState extends State<aboutUsPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pushNamed(context, '/MainPage'),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Text(
           'About Us',

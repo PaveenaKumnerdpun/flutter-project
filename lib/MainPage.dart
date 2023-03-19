@@ -1,18 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_project/AboutUsPage.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const mainPage(),
-      routes: {
-        '/AboutUsPage': (context) => const AboutUsPage(),
-      },
-    );
+    log("something");
+    return const mainPage();
   }
 }
 
@@ -41,10 +37,16 @@ class _mainPageState extends State<mainPage> {
         ),
       ),
       body: Center(
-        child: ElevatedButton(
-          child: const Text('Open About Us Page'),
-          onPressed: () => Navigator.pushNamed(context, '/AboutUsPage'),
-        ),
+        child: Column(children: [
+          ElevatedButton(
+            child: const Text('Open About Us Page'),
+            onPressed: () => Navigator.of(context).pushNamed("/AboutUsPage"),
+          ),
+          ElevatedButton(
+            child: const Text('Open Search page'),
+            onPressed: () => Navigator.of(context).pushNamed("/SearchPage"),
+          ),
+        ]),
       ),
     );
   }
