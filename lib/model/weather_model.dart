@@ -10,119 +10,123 @@ String weatherToJson(Weather data) => json.encode(data.toJson());
 
 class Weather {
   Weather({
-    required this.status,
-    required this.data,
+    this.status,
+    this.data,
   });
 
-  String status;
-  Data data;
+  String? status;
+  Data? data;
 
   factory Weather.fromJson(Map<String, dynamic> json) => Weather(
         status: json["status"],
-        data: Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
       );
 
   Map<String, dynamic> toJson() => {
         "status": status,
-        "data": data.toJson(),
+        "data": data?.toJson(),
       };
 }
 
 class Data {
   Data({
-    required this.aqi,
-    required this.idx,
-    required this.attributions,
-    required this.city,
-    required this.dominentpol,
-    required this.iaqi,
-    required this.time,
-    required this.forecast,
-    required this.debug,
+    this.aqi,
+    this.idx,
+    this.attributions,
+    this.city,
+    this.dominentpol,
+    this.iaqi,
+    this.time,
+    this.forecast,
+    this.debug,
   });
 
-  int aqi;
-  int idx;
-  List<Attribution> attributions;
-  City city;
-  String dominentpol;
-  Iaqi iaqi;
-  Time time;
-  Forecast forecast;
-  Debug debug;
+  int? aqi;
+  int? idx;
+  List<Attribution>? attributions;
+  City? city;
+  String? dominentpol;
+  Iaqi? iaqi;
+  Time? time;
+  Forecast? forecast;
+  Debug? debug;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         aqi: json["aqi"],
         idx: json["idx"],
-        attributions: List<Attribution>.from(
-            json["attributions"].map((x) => Attribution.fromJson(x))),
-        city: City.fromJson(json["city"]),
+        attributions: json["attributions"] == null
+            ? []
+            : List<Attribution>.from(
+                json["attributions"]!.map((x) => Attribution.fromJson(x))),
+        city: json["city"] == null ? null : City.fromJson(json["city"]),
         dominentpol: json["dominentpol"],
-        iaqi: Iaqi.fromJson(json["iaqi"]),
-        time: Time.fromJson(json["time"]),
-        forecast: Forecast.fromJson(json["forecast"]),
-        debug: Debug.fromJson(json["debug"]),
+        iaqi: json["iaqi"] == null ? null : Iaqi.fromJson(json["iaqi"]),
+        time: json["time"] == null ? null : Time.fromJson(json["time"]),
+        forecast: json["forecast"] == null
+            ? null
+            : Forecast.fromJson(json["forecast"]),
+        debug: json["debug"] == null ? null : Debug.fromJson(json["debug"]),
       );
 
   Map<String, dynamic> toJson() => {
         "aqi": aqi,
         "idx": idx,
-        "attributions": List<dynamic>.from(attributions.map((x) => x.toJson())),
-        "city": city.toJson(),
+        "attributions": attributions == null
+            ? []
+            : List<dynamic>.from(attributions!.map((x) => x.toJson())),
+        "city": city?.toJson(),
         "dominentpol": dominentpol,
-        "iaqi": iaqi.toJson(),
-        "time": time.toJson(),
-        "forecast": forecast.toJson(),
-        "debug": debug.toJson(),
+        "iaqi": iaqi?.toJson(),
+        "time": time?.toJson(),
+        "forecast": forecast?.toJson(),
+        "debug": debug?.toJson(),
       };
 }
 
 class Attribution {
   Attribution({
-    required this.url,
-    required this.name,
-    this.logo,
+    this.url,
+    this.name,
   });
 
-  String url;
-  String name;
-  String? logo;
+  String? url;
+  String? name;
 
   factory Attribution.fromJson(Map<String, dynamic> json) => Attribution(
         url: json["url"],
         name: json["name"],
-        logo: json["logo"],
       );
 
   Map<String, dynamic> toJson() => {
         "url": url,
         "name": name,
-        "logo": logo,
       };
 }
 
 class City {
   City({
-    required this.geo,
-    required this.name,
-    required this.url,
-    required this.location,
+    this.geo,
+    this.name,
+    this.url,
+    this.location,
   });
 
-  List<double> geo;
-  String name;
-  String url;
-  String location;
+  List<double>? geo;
+  String? name;
+  String? url;
+  String? location;
 
   factory City.fromJson(Map<String, dynamic> json) => City(
-        geo: List<double>.from(json["geo"].map((x) => x?.toDouble())),
+        geo: json["geo"] == null
+            ? []
+            : List<double>.from(json["geo"]!.map((x) => x?.toDouble())),
         name: json["name"],
         url: json["url"],
         location: json["location"],
       );
 
   Map<String, dynamic> toJson() => {
-        "geo": List<dynamic>.from(geo.map((x) => x)),
+        "geo": geo == null ? [] : List<dynamic>.from(geo!.map((x) => x)),
         "name": name,
         "url": url,
         "location": location,
@@ -131,80 +135,93 @@ class City {
 
 class Debug {
   Debug({
-    required this.sync,
+    this.sync,
   });
 
-  DateTime sync;
+  DateTime? sync;
 
   factory Debug.fromJson(Map<String, dynamic> json) => Debug(
-        sync: DateTime.parse(json["sync"]),
+        sync: json["sync"] == null ? null : DateTime.parse(json["sync"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "sync": sync.toIso8601String(),
+        "sync": sync?.toIso8601String(),
       };
 }
 
 class Forecast {
   Forecast({
-    required this.daily,
+    this.daily,
   });
 
-  Daily daily;
+  Daily? daily;
 
   factory Forecast.fromJson(Map<String, dynamic> json) => Forecast(
-        daily: Daily.fromJson(json["daily"]),
+        daily: json["daily"] == null ? null : Daily.fromJson(json["daily"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "daily": daily.toJson(),
+        "daily": daily?.toJson(),
       };
 }
 
 class Daily {
   Daily({
-    required this.o3,
-    required this.pm10,
-    required this.pm25,
-    required this.uvi,
+    this.o3,
+    this.pm10,
+    this.pm25,
+    this.uvi,
   });
 
-  List<O3> o3;
-  List<O3> pm10;
-  List<O3> pm25;
-  List<O3> uvi;
+  List<O3>? o3;
+  List<O3>? pm10;
+  List<O3>? pm25;
+  List<O3>? uvi;
 
   factory Daily.fromJson(Map<String, dynamic> json) => Daily(
-        o3: List<O3>.from(json["o3"].map((x) => O3.fromJson(x))),
-        pm10: List<O3>.from(json["pm10"].map((x) => O3.fromJson(x))),
-        pm25: List<O3>.from(json["pm25"].map((x) => O3.fromJson(x))),
-        uvi: List<O3>.from(json["uvi"].map((x) => O3.fromJson(x))),
+        o3: json["o3"] == null
+            ? []
+            : List<O3>.from(json["o3"]!.map((x) => O3.fromJson(x))),
+        pm10: json["pm10"] == null
+            ? []
+            : List<O3>.from(json["pm10"]!.map((x) => O3.fromJson(x))),
+        pm25: json["pm25"] == null
+            ? []
+            : List<O3>.from(json["pm25"]!.map((x) => O3.fromJson(x))),
+        uvi: json["uvi"] == null
+            ? []
+            : List<O3>.from(json["uvi"]!.map((x) => O3.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
-        "o3": List<dynamic>.from(o3.map((x) => x.toJson())),
-        "pm10": List<dynamic>.from(pm10.map((x) => x.toJson())),
-        "pm25": List<dynamic>.from(pm25.map((x) => x.toJson())),
-        "uvi": List<dynamic>.from(uvi.map((x) => x.toJson())),
+        "o3": o3 == null ? [] : List<dynamic>.from(o3!.map((x) => x.toJson())),
+        "pm10": pm10 == null
+            ? []
+            : List<dynamic>.from(pm10!.map((x) => x.toJson())),
+        "pm25": pm25 == null
+            ? []
+            : List<dynamic>.from(pm25!.map((x) => x.toJson())),
+        "uvi":
+            uvi == null ? [] : List<dynamic>.from(uvi!.map((x) => x.toJson())),
       };
 }
 
 class O3 {
   O3({
-    required this.avg,
-    required this.day,
-    required this.max,
-    required this.min,
+    this.avg,
+    this.day,
+    this.max,
+    this.min,
   });
 
-  int avg;
-  DateTime day;
-  int max;
-  int min;
+  int? avg;
+  DateTime? day;
+  int? max;
+  int? min;
 
   factory O3.fromJson(Map<String, dynamic> json) => O3(
         avg: json["avg"],
-        day: DateTime.parse(json["day"]),
+        day: json["day"] == null ? null : DateTime.parse(json["day"]),
         max: json["max"],
         min: json["min"],
       );
@@ -212,7 +229,7 @@ class O3 {
   Map<String, dynamic> toJson() => {
         "avg": avg,
         "day":
-            "${day.year.toString().padLeft(4, '0')}-${day.month.toString().padLeft(2, '0')}-${day.day.toString().padLeft(2, '0')}",
+            "${day!.year.toString().padLeft(4, '0')}-${day!.month.toString().padLeft(2, '0')}-${day!.day.toString().padLeft(2, '0')}",
         "max": max,
         "min": min,
       };
@@ -220,62 +237,62 @@ class O3 {
 
 class Iaqi {
   Iaqi({
-    required this.co,
-    required this.h,
-    required this.no2,
-    required this.o3,
-    required this.p,
-    required this.pm10,
-    required this.pm25,
-    required this.so2,
-    required this.t,
-    required this.w,
+    this.co,
+    this.h,
+    this.no2,
+    this.o3,
+    this.p,
+    this.pm10,
+    this.pm25,
+    this.so2,
+    this.t,
+    this.w,
   });
 
-  Co co;
-  Co h;
-  Co no2;
-  Co o3;
-  Co p;
-  Co pm10;
-  Co pm25;
-  Co so2;
-  Co t;
-  Co w;
+  Co? co;
+  Co? h;
+  Co? no2;
+  Co? o3;
+  Co? p;
+  Co? pm10;
+  Co? pm25;
+  Co? so2;
+  Co? t;
+  Co? w;
 
   factory Iaqi.fromJson(Map<String, dynamic> json) => Iaqi(
-        co: Co.fromJson(json["co"]),
-        h: Co.fromJson(json["h"]),
-        no2: Co.fromJson(json["no2"]),
-        o3: Co.fromJson(json["o3"]),
-        p: Co.fromJson(json["p"]),
-        pm10: Co.fromJson(json["pm10"]),
-        pm25: Co.fromJson(json["pm25"]),
-        so2: Co.fromJson(json["so2"]),
-        t: Co.fromJson(json["t"]),
-        w: Co.fromJson(json["w"]),
+        co: json["co"] == null ? null : Co.fromJson(json["co"]),
+        h: json["h"] == null ? null : Co.fromJson(json["h"]),
+        no2: json["no2"] == null ? null : Co.fromJson(json["no2"]),
+        o3: json["o3"] == null ? null : Co.fromJson(json["o3"]),
+        p: json["p"] == null ? null : Co.fromJson(json["p"]),
+        pm10: json["pm10"] == null ? null : Co.fromJson(json["pm10"]),
+        pm25: json["pm25"] == null ? null : Co.fromJson(json["pm25"]),
+        so2: json["so2"] == null ? null : Co.fromJson(json["so2"]),
+        t: json["t"] == null ? null : Co.fromJson(json["t"]),
+        w: json["w"] == null ? null : Co.fromJson(json["w"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "co": co.toJson(),
-        "h": h.toJson(),
-        "no2": no2.toJson(),
-        "o3": o3.toJson(),
-        "p": p.toJson(),
-        "pm10": pm10.toJson(),
-        "pm25": pm25.toJson(),
-        "so2": so2.toJson(),
-        "t": t.toJson(),
-        "w": w.toJson(),
+        "co": co?.toJson(),
+        "h": h?.toJson(),
+        "no2": no2?.toJson(),
+        "o3": o3?.toJson(),
+        "p": p?.toJson(),
+        "pm10": pm10?.toJson(),
+        "pm25": pm25?.toJson(),
+        "so2": so2?.toJson(),
+        "t": t?.toJson(),
+        "w": w?.toJson(),
       };
 }
 
 class Co {
   Co({
-    required this.v,
+    this.v,
   });
 
-  double v;
+  double? v;
 
   factory Co.fromJson(Map<String, dynamic> json) => Co(
         v: json["v"]?.toDouble(),
@@ -288,28 +305,28 @@ class Co {
 
 class Time {
   Time({
-    required this.s,
-    required this.tz,
-    required this.v,
-    required this.iso,
+    this.s,
+    this.tz,
+    this.v,
+    this.iso,
   });
 
-  DateTime s;
-  String tz;
-  int v;
-  DateTime iso;
+  DateTime? s;
+  String? tz;
+  int? v;
+  DateTime? iso;
 
   factory Time.fromJson(Map<String, dynamic> json) => Time(
-        s: DateTime.parse(json["s"]),
+        s: json["s"] == null ? null : DateTime.parse(json["s"]),
         tz: json["tz"],
         v: json["v"],
-        iso: DateTime.parse(json["iso"]),
+        iso: json["iso"] == null ? null : DateTime.parse(json["iso"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "s": s.toIso8601String(),
+        "s": s?.toIso8601String(),
         "tz": tz,
         "v": v,
-        "iso": iso.toIso8601String(),
+        "iso": iso?.toIso8601String(),
       };
 }

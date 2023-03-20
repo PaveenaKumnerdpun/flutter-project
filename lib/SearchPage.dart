@@ -49,19 +49,19 @@ class _SearchPageState extends State<SearchPage> {
             ),
 
             const SizedBox(height: 25),
-            Text("City: ${_weather?.data.city.name ?? "NULL"}"),
-            Text("Date: ${_weather?.data.time.tz ?? "NULL"}"),
-            Text("City Geo: ${_weather?.data.city.geo ?? "NULL"}"),
+            Text("City: ${_weather?.data?.city?.name ?? "NULL"}"),
+            Text("Date: ${_weather?.data?.time?.tz ?? "NULL"}"),
+            Text("City Geo: ${_weather?.data?.city?.geo ?? "NULL"}"),
             Text(
-                "Individual AQI for the PM2.5: ${_weather?.data.iaqi.pm25.v ?? "NULL"}"),
+                "Individual AQI for the PM2.5: ${_weather?.data?.iaqi?.pm25?.v ?? "NULL"}"),
             Text(
-                "Average PM2.5 Forcast: ${_weather?.data.forecast.daily.pm25[0].avg ?? "NULL"}"),
+                "Average PM2.5 Forcast: ${_weather?.data?.forecast?.daily?.pm25?[0].avg ?? "NULL"}"),
             Text(
-                "Average PM2.5 Forcast: ${_weather?.data.forecast.daily.pm25[1].avg ?? "NULL"}"),
+                "Average PM2.5 Forcast: ${_weather?.data?.forecast?.daily?.pm25?[1].avg ?? "NULL"}"),
             Text(
-                "Average PM10 Forcast: ${_weather?.data.forecast.daily.pm10[0].avg ?? "NULL"}"),
+                "Average PM10 Forcast: ${_weather?.data?.forecast?.daily?.pm10?[0].avg ?? "NULL"}"),
             Text(
-                "Average PM10 Forcast: ${_weather?.data.forecast.daily.pm10[1].avg ?? "NULL"}"),
+                "Average PM10 Forcast: ${_weather?.data?.forecast?.daily?.pm10?[1].avg ?? "NULL"}"),
           ]),
         ));
   }
