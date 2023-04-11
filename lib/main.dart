@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project/AboutUsPage.dart';
-import 'package:flutter_project/HomePage.dart';
-import 'package:flutter_project/MainPage.dart';
-import 'package:flutter_project/SearchPage.dart';
+import 'package:flutter_project/view/AboutUsPage.dart';
+import 'package:flutter_project/view/HomePage.dart';
+import 'package:flutter_project/view/MainPage.dart';
+import 'package:flutter_project/view/SearchPage.dart';
+import 'package:flutter_project/view/LoginPage.dart';
+import 'package:flutter_project/view/RegisterPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,10 +22,12 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         primarySwatch: Colors.lightBlue,
       ),
-      initialRoute: "/HomePage",
+      initialRoute: '/HomePage',
       routes: {
-        "/HomePage": (context) => const HomePage(),
-        '/MainPage': (context) => const MainPage(),
+        '/HomePage': (context) => const HomePage(),
+        '/LoginPage': (context) => const LoginPage(),
+        '/RegisterPage': (context) => const RegisterPage(),
+        '/CurrentLocationPage': (context) => const CurrentLocationPage(),
         '/AboutUsPage': (context) => const AboutUsPage(),
         '/SearchPage': (context) => const SearchPage(),
       },

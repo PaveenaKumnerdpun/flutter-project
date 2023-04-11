@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "43017622184",
+    "project_id": "airqua-da86b",
+    "storage_bucket": "airqua-da86b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43017622184:android:ddca1f5f5853b432c9289d",
+        "android_client_info": {
+          "package_name": "com.example.flutter_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43017622184-qqt75enu02mig33vantjtaofg5nc65hg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD06B9Hqoayytl0Y5Is79mfzDTOrDcZcGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43017622184-qqt75enu02mig33vantjtaofg5nc65hg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "43017622184-iqvd1hg2pkm45i80ivaso09r7co6k8u2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.airqua"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
