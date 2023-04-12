@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter_project/model/user_profile.dart';
@@ -12,7 +14,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final formKey = GlobalKey<FormState>();
-  Profile profile = Profile();
+  Profile profile = Profile("", "");
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
 
   @override
@@ -51,7 +53,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               errorText: 'enter a valid email address'),
                           keyboardType: TextInputType.emailAddress,
                           onSaved: (String? email) {
-                            profile.email = email;
+                            profile.email = email!;
                           },
                         ),
                         const SizedBox(
@@ -62,13 +64,10 @@ class _RegisterPageState extends State<RegisterPage> {
                             validator: MultiValidator([
                               RequiredValidator(
                                   errorText: 'enter a valid password'),
-                              MinLengthValidator(8,
-                                  errorText:
-                                      'password must be at least 8 digits long'),
                             ]),
                             obscureText: true,
                             onSaved: (String? password) {
-                              profile.password = password;
+                              profile.password = password!;
                             }),
                         const SizedBox(
                           height: 30,
@@ -77,12 +76,35 @@ class _RegisterPageState extends State<RegisterPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               InkWell(
-                                onTap: () {
+                                onTap: () async {
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState?.save();
-                                    print(
-                                        "email = ${profile.email} password = ${profile.password}");
-                                    formKey.currentState?.reset();
+                                    try {
+                                      await FirebaseAuth.instance
+                                          .createUserWithEmailAndPassword(
+                                              email: profile.email,
+                                              password: profile.password)
+                                          // print(
+                                          //     "email = ${profile.email} password = ${profile.password}");
+                                          .then((value) {
+                                        formKey.currentState?.reset();
+                                        Fluttertoast.showToast(
+                                            msg:
+                                                "Your account has been successfully created",
+                                            gravity: ToastGravity.TOP,
+                                            backgroundColor: Colors.green);
+
+                                        Navigator.pushNamed(
+                                            context, '/HomePage');
+                                      });
+                                    } on FirebaseAuthException catch (e) {
+                                      // print(e.message);
+                                      // print(e.code);
+                                      Fluttertoast.showToast(
+                                          msg: e.message.toString(),
+                                          gravity: ToastGravity.CENTER,
+                                          backgroundColor: Colors.red.shade900);
+                                    }
                                   } //reset to null value after pressing "Register" button
                                 },
                                 child: Container(
