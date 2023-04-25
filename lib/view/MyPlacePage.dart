@@ -1,9 +1,21 @@
+import 'dart:ffi';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_project/view/ProfilePage.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 
 import '../model/AirQuality.dart';
+import '../model/CustomLogPrinter.dart';
 import 'BottomNav.dart';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class MyPlacePage extends StatefulWidget {
   const MyPlacePage({super.key});
@@ -17,6 +29,7 @@ class _MyPlacePageState extends State<MyPlacePage> {
   AirQuality? _airQualityData;
   bool _isLoading = false;
   String? level;
+  final _screenshotController = ScreenshotController();
 
   Future<AirQuality> _fetchAirQualityData(
       double latitude, double longitude) async {
@@ -87,6 +100,13 @@ class _MyPlacePageState extends State<MyPlacePage> {
     });
   }
 
+  Future<void> _saveScreenshot(String city) async {
+    final imageBytes = await _screenshotController.capture();
+    final directory = await getExternalStorageDirectory();
+    final file = File('${directory!.path}/my_place_card.png');
+    await file.writeAsBytes(imageBytes!);
+  }
+
   String _getAqiLevel(int aqi) {
     if (aqi <= 50) {
       return 'Good';
@@ -130,48 +150,50 @@ class _MyPlacePageState extends State<MyPlacePage> {
                   children: [
                     const SizedBox(height: 32),
                     if (_airQualityData != null)
-                      SizedBox(
-                        width: 350,
-                        child: Card(
-                          color: Colors.blueGrey[50],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const SizedBox(height: 20),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  _airQualityData!.data.city,
-                                  style: const TextStyle(fontSize: 40),
-                                ),
+                      Screenshot(
+                          controller: _screenshotController,
+                          child: SizedBox(
+                            width: 350,
+                            child: Card(
+                              color: Colors.blueGrey[50],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16.0),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(3.0),
-                                child: Text(
-                                    '${_airQualityData!.data.state}, ${_airQualityData!.data.country}',
-                                    style: const TextStyle(fontSize: 20)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const SizedBox(height: 20),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      _airQualityData!.data.city,
+                                      style: const TextStyle(fontSize: 40),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(3.0),
+                                    child: Text(
+                                        '${_airQualityData!.data.state}, ${_airQualityData!.data.country}',
+                                        style: const TextStyle(fontSize: 20)),
+                                  ),
+                                  const SizedBox(height: 40),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                        'AQI: ${_airQualityData!.data.current.pollution.aqius}',
+                                        style: const TextStyle(fontSize: 50)),
+                                  ),
+                                  const SizedBox(height: 40),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text('Quality: $level',
+                                        style: const TextStyle(fontSize: 30)),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
                               ),
-                              const SizedBox(height: 40),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                    'AQI: ${_airQualityData!.data.current.pollution.aqius}',
-                                    style: const TextStyle(fontSize: 50)),
-                              ),
-                              const SizedBox(height: 40),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text('Quality: $level',
-                                    style: const TextStyle(fontSize: 30)),
-                              ),
-                              const SizedBox(height: 20),
-                            ],
-                          ),
-                        ),
-                      )
+                            ),
+                          ))
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -190,8 +212,18 @@ class _MyPlacePageState extends State<MyPlacePage> {
             ),
           const SizedBox(height: 32),
           ElevatedButton(
-            onPressed: _getCurrentPosition,
+            onPressed: () => {
+              _getCurrentPosition(),
+              logger(ProfilePage).i('Click Refresh Button'),
+            },
             child: const Text("Refresh"),
+          ),
+          ElevatedButton(
+            onPressed: () => {
+              _saveScreenshot(_airQualityData!.data.city),
+              logger(ProfilePage).i('Click Save Image Button'),
+            },
+            child: const Text('Save Image'),
           ),
         ]),
       ),

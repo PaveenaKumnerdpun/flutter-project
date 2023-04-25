@@ -1,4 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+import '../model/CustomLogPrinter.dart';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -52,7 +59,10 @@ class _HomePageState extends State<HomePage> {
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           InkWell(
-            onTap: () => Navigator.pushNamed(context, '/LoginPage'),
+            onTap: () => {
+              logger(HomePage).i('Click Login Button'),
+              Navigator.pushNamed(context, '/LoginPage')
+            },
             child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 60, vertical: 15),
@@ -75,7 +85,10 @@ class _HomePageState extends State<HomePage> {
         ),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           InkWell(
-            onTap: () => Navigator.pushNamed(context, '/RegisterPage'),
+            onTap: () => {
+              logger(HomePage).i('Click Register Button'),
+              Navigator.pushNamed(context, '/RegisterPage')
+            },
             child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 45, vertical: 15),

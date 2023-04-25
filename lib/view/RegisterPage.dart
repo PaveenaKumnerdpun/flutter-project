@@ -4,6 +4,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:flutter_project/model/UserProfile.dart';
+import 'package:logger/logger.dart';
+
+import '../model/CustomLogPrinter.dart';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -77,6 +84,8 @@ class _RegisterPageState extends State<RegisterPage> {
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logger(RegisterPage)
+                                      .i('Click Register Button');
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState?.save();
                                     try {
@@ -84,8 +93,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                           .createUserWithEmailAndPassword(
                                               email: profile.email,
                                               password: profile.password)
-                                          // print(
-                                          //     "email = ${profile.email} password = ${profile.password}");
                                           .then((value) {
                                         formKey.currentState?.reset();
                                         Fluttertoast.showToast(
@@ -98,8 +105,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                             context, '/HomePage');
                                       });
                                     } on FirebaseAuthException catch (e) {
-                                      // print(e.message);
-                                      // print(e.code);
                                       Fluttertoast.showToast(
                                           msg: e.message.toString(),
                                           gravity: ToastGravity.CENTER,

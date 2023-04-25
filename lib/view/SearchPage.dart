@@ -1,11 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 
+import '../model/CustomLogPrinter.dart';
 import 'BottomNav.dart';
 
 const apiKey = 'd2b74894-45f9-4037-891e-5a3bc503c687';
 const country = 'Thailand';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -249,6 +255,7 @@ class _SearchPageState extends State<SearchPage> {
                 primary: Colors.green[400], // Background color
               ),
               onPressed: () {
+                logger(SearchPage).i('Click Search Button');
                 if (_selectedState != null && _selectedCity != null) {
                   _getAirQualityData();
                 } else {
@@ -269,6 +276,7 @@ class _SearchPageState extends State<SearchPage> {
                 primary: Colors.blue[400], // Background color
               ),
               onPressed: () {
+                logger(SearchPage).i('Click Clear Button');
                 setState(() {
                   _selectedState = null;
                   _selectedCity = null;

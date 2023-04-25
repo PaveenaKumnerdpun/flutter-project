@@ -1,8 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/view/HomePage.dart';
+import 'package:logger/logger.dart';
 
+import '../model/CustomLogPrinter.dart';
 import 'BottomNav.dart';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class ProfilePage extends StatefulWidget {
   final String? email;
@@ -50,6 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   style: TextStyle(fontSize: 18),
                 ),
                 onPressed: () {
+                  logger(ProfilePage).i('Click Logout Button');
                   _auth.signOut().then((value) {
                     Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) {

@@ -3,8 +3,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:logger/logger.dart';
 
+import '../model/CustomLogPrinter.dart';
 import '../model/UserProfile.dart';
+
+final logger = (Type type) => Logger(
+      printer: CustomLogPrinter(type.toString()),
+    );
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -79,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                             children: [
                               InkWell(
                                 onTap: () async {
+                                  logger(LoginPage).i('Click Login Button');
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState?.save();
                                     try {
