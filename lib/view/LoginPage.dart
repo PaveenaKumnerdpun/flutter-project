@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
-import '../model/user_profile.dart';
+import '../model/UserProfile.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -14,7 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
+  // @override
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile("", "");
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
@@ -86,8 +86,6 @@ class _LoginPageState extends State<LoginPage> {
                                           .signInWithEmailAndPassword(
                                               email: profile.email,
                                               password: profile.password)
-                                          // print(
-                                          //     "email = ${profile.email} password = ${profile.password}");
                                           .then((value) {
                                         formKey.currentState?.reset();
                                         Fluttertoast.showToast(
@@ -95,12 +93,10 @@ class _LoginPageState extends State<LoginPage> {
                                             gravity: ToastGravity.TOP,
                                             backgroundColor: Colors.green);
 
-                                        Navigator.pushNamed(
+                                        Navigator.pushReplacementNamed(
                                             context, '/CurrentLocationPage');
                                       });
                                     } on FirebaseAuthException catch (e) {
-                                      // print(e.message);
-                                      // print(e.code);
                                       Fluttertoast.showToast(
                                           msg: e.message.toString(),
                                           gravity: ToastGravity.CENTER,

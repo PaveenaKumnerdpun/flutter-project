@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
-import 'package:flutter_project/model/user_profile.dart';
+import 'package:flutter_project/model/UserProfile.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
