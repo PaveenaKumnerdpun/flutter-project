@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 import '../model/CustomLogPrinter.dart';
 import 'BottomNav.dart';
 
-const apiKey = 'd2b74894-45f9-4037-891e-5a3bc503c687';
+const apiKey = '37db5cd5-5bb4-4cfb-ba62-5fb7503049e4';
 const country = 'Thailand';
 
 final logger = (Type type) => Logger(
@@ -110,12 +110,15 @@ class _SearchPageState extends State<SearchPage> {
 
     final data = jsonDecode(response.body);
     if (data['status'] == "success") {
+      logger(SearchPage).i('Fetch cities from API');
       final List<dynamic> cities = data['data'];
 
       setState(() {
         _cities = cities.map((city) => city['city']).cast<String>().toList();
         _selectedCity = null;
       });
+    } else {
+      logger(SearchPage).w('data is not available for this state from API');
     }
   }
 
@@ -125,6 +128,7 @@ class _SearchPageState extends State<SearchPage> {
 
     final data = jsonDecode(response.body);
     if (data != null) {
+      logger(SearchPage).i('Fetch AQI data from API');
       final Map<String, dynamic> current = data['data']['current'];
       final String cityName = data['data']['city'];
 

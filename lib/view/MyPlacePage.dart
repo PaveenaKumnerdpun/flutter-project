@@ -34,7 +34,7 @@ class _MyPlacePageState extends State<MyPlacePage> {
   Future<AirQuality> _fetchAirQualityData(
       double latitude, double longitude) async {
     const apiKey =
-        'd2b74894-45f9-4037-891e-5a3bc503c687'; // Replace this with your actual API key
+        '37db5cd5-5bb4-4cfb-ba62-5fb7503049e4'; // Replace this with your actual API key
     final url =
         'http://api.airvisual.com/v2/nearest_city?lat=$latitude&lon=$longitude&key=$apiKey';
 
